@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- '6.1'
+after_success: "./node_modules/.bin/codecov"
+deploy:
+  provider: npm
+  email: jacob@jacobsmith.io
+  api_key:
+    secure: 0/+R8gmLUCswLnsKM8jbtNgzzsQXIV/Z4tsfWyIA/cKg9kVJu/COcUAKub2tjU8O1zcKgib+qYvZls6t9unpb0z+dCpKRnDQo9ykaGbrBzjmMT85eb97iGYQf5Fwx/Nzq003Gh18TARmE8TMig5D4uTfmk/9ewJUPrKEJgO2c9WNyK7L6bptjMTJwnomJul8QajIfJ1avyBlIbQdVJ2nM4IZ0VXI3rGHSCNYFRAUQA1PlfEUVtjLAbz9Q9H3jtRxuBLXUIV4wQEPCG7k3dqIK6PxcSCHrboJbGDe0LiwprLUkRYZn15nQUHFEvorqQuPZk4NHJLTZ8Mwgcm5OcfRK+TibLtck09vzCGOg1uJ6nuqOsOTc7fXlxp0/I2Z6NqjomaQYIVnM6Cgi05mB0bpIipsxYgmU3Yqycv1wJ6RWx1yy2RpXumoDF4KdSaZ9e+/Z4THDWEiSGUWiLWgolKmiDmy2E2610xohcl6kI/kRpJfPz5lVO8Z3hp0toaUZ7z0BGUFNu9pyOeFK5gZ+XRj9/zukCBa+1JRbEuBziAXfaCKwv4tQd386xdZNcGyi0uatQG2wTMaDG4v8rHghynr02k8p7hta9mhl1iXjw0rw4/cvg4j7rLVfzOJqOG3feVrSWMxa2h7KADwVlhGYQc71Z8GbXP+2cjrYN4SakdTuCs=
+  on:
+    tags: true
+    repo: jacobthemyth/parse-server-ftp-http-adapter
