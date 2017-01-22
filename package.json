@@ -1,0 +1,37 @@
+{
+  "name": "parse-server-ftp-http-adapter",
+  "version": "0.0.1",
+  "description": "parse-server file adapter for FTP upload and HTTP download",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm run lint",
+    "test": "NODE_ENV=test NODE_CONFIG_DIR=./spec/config istanbul cover -x **/spec/** jasmine --captureExceptions",
+    "lint": "eslint --cache ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jacobthemyth/parse-server-ftp-http-adapter.git"
+  },
+  "keywords": [
+    "parse-server",
+    "FTP",
+    "HTTP"
+  ],
+  "author": "Jacob Smith <jacob@jacobsmith.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jacobthemyth/parse-server-ftp-http-adapter/issues"
+  },
+  "homepage": "https://github.com/jacobthemyth/parse-server-ftp-http-adapter",
+  "dependencies": {},
+  "devDependencies": {
+    "codecov": "^1.0.1",
+    "eslint": "^3.14.0",
+    "ftpd": "https://github.com/sstur/nodeftpd",
+    "istanbul": "^0.4.5",
+    "jasmine": "^2.5.3",
+    "q": "^1.4.1",
+    "rimraf": "^2.5.4",
+    "st": "^1.2.0"
+  }
+}
