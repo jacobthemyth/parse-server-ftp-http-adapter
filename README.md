@@ -29,10 +29,10 @@ var api = new ParseServer({
       port:     process.env.FTP_PORT || "21",
       username: process.env.FTP_USER || "user",
       password: process.env.FTP_PASS || "secret",
-      path:     process.env.FTP_PATH || "/site/uploads"
+      path:     process.env.FTP_PATH || "/example.com/uploads"
     },
     http: {
-      host: process.env.HTTP_HOST || "example.com",
+      host: process.env.HTTP_HOST || "http://example.com",
       port: process.env.HTTP_PORT || "80",
       path: process.env.HTTP_PATH || "/uploads"
     }

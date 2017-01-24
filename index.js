@@ -60,8 +60,9 @@ class FtpHttpAdapter {
 
   getFileLocation(config, filename) {
     filename = encodeURIComponent(filename);
-    let {host, path} = this.options.http
-    return `${url.resolve(host, path)}/${filename}`;
+    const {host, path, port} = this.options.http
+    const baseUrl = url.resolve((port == 80 ? host : `${host}:${port}`), path);
+    return `${baseUrl}/${filename}`;
   }
 }
 

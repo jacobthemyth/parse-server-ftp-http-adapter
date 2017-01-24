@@ -67,7 +67,9 @@ describe("Integration suite", () => {
     }, 5000);
 
     it('should properly get file location', () => {
-      expect(adapter.getFileLocation({}, 'test.png')).toEqual('http://127.0.0.1/uploads/test.png');
+      expect(adapter.getFileLocation({}, 'test.png')).toEqual(`http://127.0.0.1:${httpd.port}/uploads/test.png`);
+      adapter.options.http.port = 80
+      expect(adapter.getFileLocation({}, 'test.png')).toEqual(`http://127.0.0.1/uploads/test.png`);
     });
   });
 });
