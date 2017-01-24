@@ -1,17 +1,15 @@
-const ftpd     = require('ftpd');
-const getPort  = require('./get-port');
-const rootPath = process.argv[2];
+const ftpd    = require('ftpd');
+const getPort = require('./get-port');
+
+const rootPath  = process.argv[2];
+const mountPath = process.argv[3];
 
 getPort((port) => {
   let server;
-  const options = {
-    host: '127.0.0.1',
-    port: port
-  };
 
-  server = new ftpd.FtpServer(options.host, {
+  server = new ftpd.FtpServer('127.0.0.1', {
     getInitialCwd() {
-      return '/';
+      return mountPath;
     },
     getRoot() {
       return rootPath;
@@ -38,10 +36,9 @@ getPort((port) => {
     });
   });
 
-  server.debugging = 4;
-  server.listen(options.port);
+  server.listen(port);
   process.send({
     pid: process.pid,
-    port: options.port
+    port: port
   });
 });

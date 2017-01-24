@@ -5,7 +5,10 @@ let ftpd, httpd;
 
 describe("Integration suite", () => {
   beforeAll((done) => {
-    testServers.start().then((servers) => {
+    testServers.start({
+      ftpPath:  '/example.com/uploads',
+      httpPath: '/example.com',
+    }).then((servers) => {
       [ftpd, httpd] = servers;
     }).then(done);
   });
@@ -20,11 +23,13 @@ describe("Integration suite", () => {
           host: '127.0.0.1',
           port: ftpd.port,
           user: 'user',
-          password: 'password'
+          password: 'password',
+          path: '/example.com/uploads'
         },
         http: {
-          host: '127.0.0.1',
-          port: httpd.port
+          host: 'http://127.0.0.1',
+          port: httpd.port,
+          path: '/uploads'
         }
       });
     });
@@ -33,14 +38,16 @@ describe("Integration suite", () => {
       const filename = 'file.txt';
       adapter.createFile(filename, "hello world", 'text/utf8').then(() => {
         return adapter.getFileData(filename);
-      }, () => {
+      }, (err) => {
+        console.error(err);
         fail("The adapter should create the file");
         done();
       }).then((result) => {
         expect(result instanceof Buffer).toBe(true);
         expect(result.toString('utf-8')).toEqual("hello world");
         return adapter.deleteFile(filename);
-      }, () => {
+      }, (err) => {
+        console.error(err);
         fail("The adapter should get the file");
         done();
       }).then(() => {
@@ -52,10 +59,15 @@ describe("Integration suite", () => {
           done();
         });
 
-      }, () => {
+      }, (err) => {
+        console.error(err);
         fail("The adapter should delete the file");
         done();
       });
     }, 5000);
+
+    it('should properly get file location', () => {
+      expect(adapter.getFileLocation({}, 'test.png')).toEqual('http://127.0.0.1/uploads/test.png');
+    });
   });
 });

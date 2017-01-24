@@ -1,6 +1,6 @@
 {
   "name": "parse-server-ftp-http-adapter",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "parse-server file adapter for FTP upload and HTTP download",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,9 @@
     "url": "https://github.com/jacobthemyth/parse-server-ftp-http-adapter/issues"
   },
   "homepage": "https://github.com/jacobthemyth/parse-server-ftp-http-adapter",
-  "dependencies": {},
+  "dependencies": {
+    "ftp": "^0.3.10"
+  },
   "devDependencies": {
     "codecov": "^1.0.1",
     "eslint": "^3.14.0",
