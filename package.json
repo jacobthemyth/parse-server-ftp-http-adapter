@@ -32,7 +32,6 @@
     "ftpd": "https://github.com/sstur/nodeftpd",
     "istanbul": "^0.4.5",
     "jasmine": "^2.5.3",
-    "q": "^1.4.1",
     "rimraf": "^2.5.4",
     "st": "^1.2.0"
   }
