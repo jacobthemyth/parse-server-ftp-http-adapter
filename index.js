@@ -1,6 +1,7 @@
-const Ftp  = require('ftp');
-const path = require('path');
-const url  = require('url');
+const Ftp   = require('ftp');
+const merge = require('lodash/merge');
+const path  = require('path');
+const url   = require('url');
 
 class FtpHttpAdapter {
   constructor(options) {
@@ -11,12 +12,7 @@ class FtpHttpAdapter {
       this.ftpClient.on('ready', resolve);
     });
 
-    this.ftpClient.connect({
-      host: this.options.ftp.host,
-      port: this.options.ftp.port,
-      user: this.options.ftp.user,
-      password: this.options.ftp.pass,
-    });
+    this.ftpClient.connect(this.options.ftp);
   }
 
   createFile(filename, data) {
@@ -72,13 +68,11 @@ module.exports.default = FtpHttpAdapter;
 function processOptions(options) {
   const defaults = {
     ftp: {
-      port: 21,
-      user: "anonymous",
-      pass: "@anonymous",
       path: '/'
     },
 
     http: {
+      port: 80,
       path: '/'
     }
   };
@@ -92,7 +86,7 @@ function processOptions(options) {
     }
   });
 
-  return Object.assign({}, defaults, options);
+  return merge({}, defaults, options);
 }
 
 function streamToBuffer(stream) {

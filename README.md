@@ -25,16 +25,17 @@ var api = new ParseServer({
   ...
   filesAdapter: new FtpHttpAdapter({
     ftp: {
-      host:     process.env.FTP_HOST || "example.com",
-      port:     process.env.FTP_PORT || "21",
-      username: process.env.FTP_USER || "user",
-      password: process.env.FTP_PASS || "secret",
-      path:     process.env.FTP_PATH || "/example.com/uploads"
+      host:     "example.com",         # required
+      port:     21,                    # defaults to 21
+      username: "user",                # defaults to "anonymous"
+      password: "secret",              # defaults to "@anonymous"
+      path:     "/example.com/uploads" # defaults to "/"
+      ...                              # any other options to send to node-ftp
     },
     http: {
-      host: process.env.HTTP_HOST || "http://example.com",
-      port: process.env.HTTP_PORT || "80",
-      path: process.env.HTTP_PATH || "/uploads"
+      host: "http://example.com",      # required
+      port: 80,                        # defaults to 80
+      path: "/uploads"                 # defaults to "/"
     }
   }),
   ...
