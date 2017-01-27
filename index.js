@@ -12,6 +12,13 @@ class FtpHttpAdapter {
       this.ftpClient.on('ready', resolve);
     });
 
+    if(this.options.debug) {
+      this.ftpClient.on('greeting', console.log); // eslint-disable-line no-console
+      this.ftpClient.on('close', console.log); // eslint-disable-line no-console
+      this.ftpClient.on('end', console.log); // eslint-disable-line no-console
+      this.ftpClient.on('error', console.error); // eslint-disable-line no-console
+    }
+
     this.ftpClient.connect(this.options.ftp);
   }
 

@@ -36,7 +36,8 @@ var api = new ParseServer({
       host: "http://example.com",      # required
       port: 80,                        # defaults to 80
       path: "/uploads"                 # defaults to "/"
-    }
+    },
+    debug: true                        # defaults to false
   }),
   ...
 });
