@@ -28,7 +28,7 @@ var api = new ParseServer({
       host:     "example.com",         # required
       port:     21,                    # defaults to 21
       username: "user",                # defaults to "anonymous"
-      password: "secret",              # defaults to "@anonymous"
+      password: "secret",              # defaults to "anonymous@"
       path:     "/example.com/uploads" # defaults to "/"
       ...                              # any other options to send to node-ftp
     },

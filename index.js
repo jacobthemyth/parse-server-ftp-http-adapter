@@ -1,11 +1,12 @@
-const Ftp   = require('ftp');
-const merge = require('lodash/merge');
-const path  = require('path');
-const url   = require('url');
+const Ftp        = require('ftp');
+const merge      = require('lodash/merge');
+const path       = require('path');
+const url        = require('url');
 
 class FtpHttpAdapter {
   constructor(options) {
     this.options = processOptions(options);
+    this._debug = this.options.debug;
   }
 
   _connect() {
@@ -13,20 +14,19 @@ class FtpHttpAdapter {
 
     this._ftpClient = new Ftp();
 
-    if(this.options.debug) {
-      this._ftpClient.on('greeting', console.log); // eslint-disable-line no-console
-      this._ftpClient.on('close', console.log); // eslint-disable-line no-console
-      this._ftpClient.on('end', console.log); // eslint-disable-line no-console
-      this._ftpClient.on('error', console.error); // eslint-disable-line no-console
-    }
+    this._debug && this._ftpClient.on('greeting', this._debug);
+    this._debug && this._ftpClient.on('close', this._debug);
+    this._debug && this._ftpClient.on('end', this._debug);
+    this._debug && this._ftpClient.on('error', this._debug);
 
-    this._connected = new Promise((resolve, reject) => {
+    this._connected = new Promise((resolve) => {
       this._ftpClient.on('ready', () => {
         resolve(this._ftpClient);
       });
       this._ftpClient.on('error', (err) => {
         this._disconnect();
-        reject(err);
+        this._debug && this._debug(err.stack);
+        setTimeout(this._connect.bind(this), 30000);
       });
     });
 
@@ -38,44 +38,56 @@ class FtpHttpAdapter {
   _disconnect() {
     this._ftpClient.end();
     delete this._ftpClient;
+    delete this._connected;
   }
 
   createFile(filename, data) {
     const buffer = Buffer.from(data);
     const filePath = path.join(this.options.ftp.path, filename);
 
+    this._debug && this._debug(`createFile: called with ${filename}`);
+
     return this._connect().then((client) => {
+      this._debug && this._debug(`createFile: connected with ${filename}`);
       return new Promise((resolve, reject) => {
-        client.put(buffer, filePath, function(err) {
+        client.put(buffer, filePath, (err) => {
           if(err) return reject(err);
+          this._debug && this._debug(`createFile: PUT successful with ${filename}`);
           resolve();
         });
       });
-    });
+    }, this._handleError.bind(this));
   }
 
   getFileData(filename) {
     const filePath = path.join(this.options.ftp.path, filename);
 
+    this._debug && this._debug(`getFileData: called with ${filename}`);
+
     return this._connect().then((client) => {
+      this._debug && this._debug(`getFileData: connected with ${filename}`);
       return new Promise((resolve, reject) => {
-        client.get(filePath, function(err, stream) {
+        client.get(filePath, (err, stream) => {
           if(err) return reject(err);
+          this._debug && this._debug(`getFileData: GET successful with ${filename}`);
           streamToBuffer(stream).then(resolve, reject);
         });
       });
-    });
+    }, this._handleError.bind(this));
   }
 
   deleteFile(filename) {
+    this._debug && this._debug(`deleteFile: called with ${filename}`);
     return this._connect().then((client) => {
+      this._debug && this._debug(`deleteFile: connected with ${filename}`);
       return new Promise((resolve, reject) => {
-        client.delete(path.join(this.options.ftp.path, filename), function(err) {
+        client.delete(path.join(this.options.ftp.path, filename), (err) => {
           if(err) return reject(err);
+          this._debug && this._debug(`deleteFile: DEL successful with ${filename}`);
           return resolve();
         });
       });
-    });
+    }, this._handleError.bind(this));
   }
 
 
@@ -84,6 +96,11 @@ class FtpHttpAdapter {
     const {host, path, port} = this.options.http
     const baseUrl = url.resolve((port == 80 ? host : `${host}:${port}`), path);
     return `${baseUrl}/${filename}`;
+  }
+
+  _handleError(err) {
+    this._debug && this._debug(err);
+    return err;
   }
 }
 
