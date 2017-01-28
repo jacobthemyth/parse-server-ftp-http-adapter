@@ -129,6 +129,21 @@ function processOptions(options) {
       default: '/'
     },
     {
+      path: 'ftp.port',
+      env: 'PARSE_SERVER_FILES_FTP_PORT',
+      default: 21
+    },
+    {
+      path: 'ftp.user',
+      env: 'PARSE_SERVER_FILES_FTP_USER',
+      default: 'anonymous'
+    },
+    {
+      path: 'ftp.password',
+      env: 'PARSE_SERVER_FILES_FTP_PASSWORD',
+      default: 'anonymous@'
+    },
+    {
       path: 'http.port',
       env: 'PARSE_SERVER_FILES_HTTP_PORT',
       default: 80
