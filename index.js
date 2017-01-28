@@ -1,5 +1,5 @@
 const Ftp        = require('ftp');
-const merge      = require('lodash/merge');
+const _          = require('lodash/fp');
 const path       = require('path');
 const url        = require('url');
 
@@ -108,27 +108,42 @@ module.exports = FtpHttpAdapter;
 module.exports.default = FtpHttpAdapter;
 
 function processOptions(options) {
-  const defaults = {
-    ftp: {
-      path: '/'
+  return _.flow(
+    _.map((def) => {
+      let option = process.env[def.env] || deepFetch(def.path, options) || def.default;
+      if(def.required && !option) throw `FtpHttpAdapter requires option '${def.path}'`;
+      return [def.path, option];
+    }),
+    _.zipAll,
+    _.spread(_.zipObjectDeep),
+    _.merge(options)
+  )([
+    {
+      path: 'ftp.host',
+      env: 'PARSE_SERVER_FILES_FTP_HOST',
+      required: true
     },
-
-    http: {
-      port: 80,
-      path: '/'
+    {
+      path: 'ftp.path',
+      env: 'PARSE_SERVER_FILES_FTP_PATH',
+      default: '/'
+    },
+    {
+      path: 'http.port',
+      env: 'PARSE_SERVER_FILES_HTTP_PORT',
+      default: 80
+    },
+    {
+      path: 'http.host',
+      env: 'PARSE_SERVER_FILES_HTTP_HOST',
+      required: true
+    },
+    {
+      path: 'http.path',
+      env: 'PARSE_SERVER_FILES_HTTP_PATH',
+      default: '/'
     }
-  };
-
-  [
-    'ftp.host',
-    'http.host',
-  ].forEach(function(key) {
-    if (!key.split('.').reduce((o, k) => o[k], options)) {
-      throw `FtpHttpAdapter requires option '${key}'`;
-    }
-  });
-
-  return merge({}, defaults, options);
+  ])
 }
 
 function streamToBuffer(stream) {
@@ -142,4 +157,8 @@ function streamToBuffer(stream) {
     });
     stream.on('error', reject);
   });
+}
+
+function deepFetch(key, obj) {
+  return key.split('.').reduce((o, k) => o && o[k], obj);
 }
