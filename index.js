@@ -95,6 +95,8 @@ class FtpHttpAdapter {
     filename = encodeURIComponent(filename);
     const {host, path, port} = this.options.http
     const baseUrl = url.resolve((port == 80 ? host : `${host}:${port}`), path);
+    this._debug && this._debug(`getFileLocation: called with ${filename}`);
+    this._debug && this._debug(`getFileLocation: returning ${baseUrl}/${filename}`);
     return `${baseUrl}/${filename}`;
   }
 
