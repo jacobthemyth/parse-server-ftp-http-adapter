@@ -19,6 +19,7 @@ describe("Integration suite", () => {
 
     beforeAll(() => {
       adapter = new FtpHttpAdapter({
+        debug: true,
         ftp: {
           host: '127.0.0.1',
           port: ftpd.port,

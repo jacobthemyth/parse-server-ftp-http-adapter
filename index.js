@@ -6,7 +6,7 @@ const url        = require('url');
 class FtpHttpAdapter {
   constructor(options) {
     this.options = processOptions(options);
-    this._debug = this.options.debug;
+    this._debug = this.options.debug && console.log; // eslint-disable-line no-console
   }
 
   _connect() {
@@ -120,6 +120,11 @@ function processOptions(options) {
     _.spread(_.zipObjectDeep),
     _.merge(options)
   )([
+    {
+      path: 'debug',
+      env: 'PARSE_SERVER_FILES_DEBUG',
+      default: false
+    },
     {
       path: 'ftp.host',
       env: 'PARSE_SERVER_FILES_FTP_HOST',
