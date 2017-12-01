@@ -1,8 +1,8 @@
 # parse-server-ftp-http-adapter
 
-[![codecov.io](https://codecov.io/github/jacobthemyth/parse-server-ftp-http-adapter/coverage.svg?branch=master)](https://codecov.io/github/jacobthemyth/parse-server-ftp-http-adapter?branch=master)
+[![codecov.io](https://codecov.io/github/iakobos/parse-server-ftp-http-adapter/coverage.svg?branch=master)](https://codecov.io/github/iakobos/parse-server-ftp-http-adapter?branch=master)
 
-[![Build Status](https://travis-ci.org/jacobthemyth/parse-server-ftp-http-adapter.svg?branch=master)](https://travis-ci.org/jacobthemyth/parse-server-ftp-http-adapter)
+[![Build Status](https://travis-ci.org/iakobos/parse-server-ftp-http-adapter.svg?branch=master)](https://travis-ci.org/iakobos/parse-server-ftp-http-adapter)
 
 [parse-server](https://github.com/ParsePlatform/parse-server) file adapter for FTP upload and HTTP download
 

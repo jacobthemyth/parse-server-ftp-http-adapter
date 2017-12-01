@@ -10,19 +10,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jacobthemyth/parse-server-ftp-http-adapter.git"
+    "url": "git+https://github.com/iakobos/parse-server-ftp-http-adapter.git"
   },
   "keywords": [
     "parse-server",
     "FTP",
     "HTTP"
   ],
-  "author": "Jacob Smith <jacob@jacobsmith.io>",
+  "author": "Jacob Smith <jacob@iakobos.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jacobthemyth/parse-server-ftp-http-adapter/issues"
+    "url": "https://github.com/iakobos/parse-server-ftp-http-adapter/issues"
   },
-  "homepage": "https://github.com/jacobthemyth/parse-server-ftp-http-adapter",
+  "homepage": "https://github.com/iakobos/parse-server-ftp-http-adapter",
   "dependencies": {
     "ftp": "^0.3.10",
     "lodash": "^4.17.4"
