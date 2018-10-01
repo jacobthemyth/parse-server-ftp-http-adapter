@@ -17,7 +17,7 @@
     "FTP",
     "HTTP"
   ],
-  "author": "Jacob Smith <jacob@iakobos.org>",
+  "author": "Jacob Smith <jacob@jacobsmith.io>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/iakobos/parse-server-ftp-http-adapter/issues"
